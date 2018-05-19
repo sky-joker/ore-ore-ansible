@@ -72,7 +72,7 @@ options:
 
 EXAMPLES = '''
 ---
-- vmware_vm_shell_check:
+- vmware_vm_shell_wait:
     hostname: vCenter or ESXi
     username: username
     password: secret
@@ -84,7 +84,7 @@ EXAMPLES = '''
     vm_shell_args: 5
 
 # Searching vm from a folder.
-- vmware_vm_shell_check:
+- vmware_vm_shell_wait:
     hostname: vCenter or ESXi
     username: username
     password: secret
@@ -99,7 +99,7 @@ EXAMPLES = '''
     vm_shell_args: 5
 
 # Confirm process execution three times.
-- vmware_vm_shell_check:
+- vmware_vm_shell_wait:
     hostname: vCenter or ESXi
     username: username
     password: secret
