@@ -91,14 +91,19 @@ def main():
         vm = vm_svc.list(vcenter_client.VM.FilterSpec(names=names))
         r = list(map(lambda x: x.to_dict(), vm))
         if(len(r) > 0):
-            result["virtual_machines"] = r
+            result["virtual_machines"] = vm_svc.get(r[0]["vm"]).to_dict()
             module.exit_json(**result)
         else:
             module.fail_json(msg="%s not found." % vm_name)
     else:
         vms = vm_svc.list()
         r = list(map(lambda x: x.to_dict(), vms))
-        result["virtual_machines"] = r
+
+        r_array = []
+        for vm in r:
+            r_array.append(vm_svc.get(vm["vm"]).to_dict())
+
+        result["virtual_machines"] = r_array
         module.exit_json(**result)
 
 if __name__ == "__main__":
