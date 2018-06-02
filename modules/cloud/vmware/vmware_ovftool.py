@@ -328,6 +328,9 @@ def main():
     module = AnsibleModule(argument_spec=argument_spec,
                            supports_check_mode=True)
 
+    if not HAS_PYVMOMI:
+        module.fail_json(msg='pyvmomi python library not found')
+
     vmware_ovf_tool = VMwareOvfTool(module)
     vmware_ovf_tool.execute()
 
