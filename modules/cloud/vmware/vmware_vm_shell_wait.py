@@ -6,7 +6,7 @@
 
 DOCUMENTATION = '''
 module: vmware_vm_shell_wait
-sort_description: Wait for processing of executed command
+short_description: Wait for processing of executed command
 description:
     - Wait for processing of commands executed by vmware_vm_shell module.
     - This module supports only processes executed by vmware_vm_shell.
