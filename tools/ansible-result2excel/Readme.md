@@ -31,7 +31,7 @@ retry_files_enabled = False
 
 ## Usage
 
-Specify the JSON file as an argument to `ansible-result2excel.py`.
+Specify the JSON file as an argument to `ansible-result2excel.py`.  
 If there is no problem Excel file(default:output.xlsx) will be output.
 
 ```shell-session
