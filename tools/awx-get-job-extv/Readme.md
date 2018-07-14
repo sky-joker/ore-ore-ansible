@@ -2,8 +2,6 @@
 
 This tool get extra_vars from the job result executed with Ansible Tower(AWX).
 
-![](./img/excel_image.png)
-
 ## Requirement
 
 * requrests
