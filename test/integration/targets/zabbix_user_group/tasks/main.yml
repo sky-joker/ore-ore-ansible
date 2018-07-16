@@ -1,0 +1,12 @@
+---
+# Test code for the zabbix_user_group module.
+# Copyright: (c) 2018, sky-joker 
+# GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+
+- name: make sure zabbix-api install.
+  pip:
+    name: zabbix-api
+    state: latest
+
+- include: zabbix_user_group_add.yml
+- include: zabbix_user_group_del.yml

@@ -1,0 +1,19 @@
+---
+- name: Add a user group to Zabbix.
+  zabbix_user_group:
+    server_url: http://192.168.0.220/zabbix
+    login_user: admin
+    login_password: zabbix
+    validate_certs: no
+    user_group_name: test group
+    host_groups:
+      - host_group_name: Linux servers
+        permission: read
+      - host_group_name: Hypervisors
+        permission: deny
+      - host_group_name: Virtual machines
+        permission: read-write
+    users:
+      - Admin
+      - test
+    state: present
