@@ -1,0 +1,7 @@
+msg1: "{{ message1 }}"
+msg2: "{{ message2.msg }}"
+msg3: "{{ message3 }}"
+msg4: {"msg1": "{{ message1 }}", "msg2": "{{ message2.msg }}", "msg3": "{{ message3 }}"}
+msg5: ["{{ message1 }}", "{{ message2 }}", "{{ message3 }}"]
+msg6: "{{ message4 }}"
+msg7: "{{ shell_ret.stdout }}"

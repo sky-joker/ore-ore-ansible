@@ -1,0 +1,7 @@
+---
+message1: test message1
+message2:
+  msg: test message2
+message3:
+  - test message3-1
+  - test message3-2

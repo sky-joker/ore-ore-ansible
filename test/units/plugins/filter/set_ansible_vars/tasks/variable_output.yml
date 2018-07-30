@@ -1,0 +1,52 @@
+- set_fact:
+    message4: test message4
+
+- shell: ls
+  register: shell_ret
+
+
+- debug: msg="msg1"
+- debug: msg="{{ msg1 | type_debug }}"
+- debug: msg="{{ msg1 | set_ansible_vars(message1) }}"
+- debug: msg="{{ msg1 | set_ansible_vars(message1) | type_debug }}"
+
+- debug: msg="msg2"
+- debug: msg="{{ msg2 | type_debug }}"
+- debug: msg="{{ msg2 | set_ansible_vars(message2) }}"
+- debug: msg="{{ msg2 | set_ansible_vars(message2) | type_debug }}"
+
+- debug: msg="msg3"
+- debug: msg="{{ msg3 | type_debug }}"
+- debug: msg="{{ msg3 | set_ansible_vars(message3) }}"
+- debug: msg="{{ msg3 | set_ansible_vars(message3) | type_debug }}"
+
+- debug: msg="msg4"
+- debug: msg="{{ msg4 | type_debug }}"
+- debug: msg="{{ msg4 | set_ansible_vars(message1, message2, message3) }}"
+- debug: msg="{{ msg4 | set_ansible_vars(message1, message2, message3) | type_debug }}"
+- set_fact:
+    dict_test: "{{ msg4 | set_ansible_vars(message1, message2, message3) }}"
+- debug: msg="dict_msg1 {{ dict_test.msg1 }}" # not supported by the REST API
+- debug: msg="dict_msg2 {{ dict_test.msg2 }}" # not supported by the REST API
+- debug: msg="dict_msg3 {{ dict_test.msg3 }}" # not supported by the REST API
+
+- debug: msg="msg5"
+- debug: msg="{{ msg5 | type_debug }}"
+- debug: msg="{{ msg5 | set_ansible_vars(message1, message2, message3) }}"
+- debug: msg="{{ msg5 | set_ansible_vars(message1, message2, message3) | type_debug }}"
+- debug: msg="{{ msg5 | set_ansible_vars(message1, message2, message3) }}"
+- set_fact:
+    list_test: "{{ msg5 | set_ansible_vars(message1, message2, message3) }}"
+- debug: msg="list_1 {{ list_test[0] }}" # not supported by the REST API
+- debug: msg="list_2 {{ list_test[1] }}" # not supported by the REST API
+- debug: msg="list_3 {{ list_test[2] }}" # not supported by the REST API
+
+- debug: msg="msg6"
+- debug: msg="{{ msg6 | type_debug }}"
+- debug: msg="{{ msg6 | set_ansible_vars(message4) }}"
+- debug: msg="{{ msg6 | set_ansible_vars(message4) | type_debug }}"
+
+- debug: msg="msg7"
+- debug: msg="{{ msg7 | type_debug }}"
+- debug: msg="{{ msg7 | set_ansible_vars(shell_ret) }}"
+- debug: msg="{{ msg7 | set_ansible_vars(shell_ret) | type_debug }}"
