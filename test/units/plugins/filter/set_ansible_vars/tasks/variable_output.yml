@@ -26,9 +26,9 @@
 - debug: msg="{{ msg4 | set_ansible_vars(message1, message2, message3) | type_debug }}"
 - set_fact:
     dict_test: "{{ msg4 | set_ansible_vars(message1, message2, message3) }}"
-- debug: msg="dict_msg1 {{ dict_test.msg1 }}" # not supported by the REST API
-- debug: msg="dict_msg2 {{ dict_test.msg2 }}" # not supported by the REST API
-- debug: msg="dict_msg3 {{ dict_test.msg3 }}" # not supported by the REST API
+- debug: msg="dict_msg1 {{ dict_test.msg1 }}"
+- debug: msg="dict_msg2 {{ dict_test.msg2 }}"
+- debug: msg="dict_msg3 {{ dict_test.msg3 }}"
 
 - debug: msg="msg5"
 - debug: msg="{{ msg5 | type_debug }}"
@@ -37,9 +37,9 @@
 - debug: msg="{{ msg5 | set_ansible_vars(message1, message2, message3) }}"
 - set_fact:
     list_test: "{{ msg5 | set_ansible_vars(message1, message2, message3) }}"
-- debug: msg="list_1 {{ list_test[0] }}" # not supported by the REST API
-- debug: msg="list_2 {{ list_test[1] }}" # not supported by the REST API
-- debug: msg="list_3 {{ list_test[2] }}" # not supported by the REST API
+- debug: msg="list_1 {{ list_test[0] }}"
+- debug: msg="list_2 {{ list_test[1] }}"
+- debug: msg="list_3 {{ list_test[2] }}"
 
 - debug: msg="msg6"
 - debug: msg="{{ msg6 | type_debug }}"
