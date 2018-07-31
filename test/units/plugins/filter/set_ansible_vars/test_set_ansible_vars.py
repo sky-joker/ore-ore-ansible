@@ -7,14 +7,14 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 def main():
     # Ansible Tower
-    url = "https://192.168.0.234/api/v1/job_templates/11/launch/"
-    user = "admin"
-    passwd = "redhat"
+    #url = "https://192.168.0.234/api/v1/job_templates/11/launch/"
+    #user = "admin"
+    #passwd = "redhat"
 
     # AWX
-    #url = ""
-    #user = "admin"
-    #passwd = "password"
+    url = "http://192.168.0.237/api/v1/workflow_job_templates/19/launch/"
+    user = "admin"
+    passwd = "password"
 
     headers = {"Content-Type": "application/json"}
     nested_dict = lambda: defaultdict(nested_dict)
@@ -22,8 +22,8 @@ def main():
     data["extra_vars"]["msg1"] = "{{ message1 }}"
     data["extra_vars"]["msg2"] = "{{ message2.msg }}"
     data["extra_vars"]["msg3"] = "{{ message3 }}"
-    data["extra_vars"]["msg4"] = {"msg1": "{{ message1 }}", "msg2": "{{ message2.msg }}", "msg3": "{{ message3 }}"}
-    data["extra_vars"]["msg5"] = ["{{ message1 }}", "{{ message2 }}", "{{ message3 }}"]
+    data["extra_vars"]["msg4"] = '{"msg1": "{{ message1 }}", "msg2": "{{ message2.msg }}", "msg3": "{{ message3 }}"}'
+    data["extra_vars"]["msg5"] = '["{{ message1 }}", "{{ message2 }}", "{{ message3 }}"]'
     data["extra_vars"]["msg6"] = "{{ message4 }}"
     data["extra_vars"]["msg7"] = "{{ shell_ret.stdout }}"
 

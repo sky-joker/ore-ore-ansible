@@ -1,0 +1,230 @@
+[DEPRECATION WARNING]: The use of 'include' for tasks has been deprecated. Use 
+'import_tasks' for static inclusions or 'include_tasks' for dynamic inclusions.
+ This feature will be removed in a future release. Deprecation warnings can be 
+disabled by setting deprecation_warnings=False in ansible.cfg.
+[DEPRECATION WARNING]: include is kept for backwards compatibility but usage is
+ discouraged. The module documentation details page may explain more about this
+ rationale.. This feature will be removed in a future release. Deprecation 
+warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+
+PLAY [test] ********************************************************************
+
+TASK [set_ansible_vars : set_fact] *********************************************
+ok: [localhost]
+
+TASK [set_ansible_vars : command] **********************************************
+changed: [localhost]
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "msg1"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "AnsibleUnsafeText"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "test message1"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "unicode"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "msg2"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "AnsibleUnsafeText"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "test message2"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "unicode"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "msg3"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "AnsibleUnsafeText"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": [
+        "test message3-1", 
+        "test message3-2"
+    ]
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "unicode"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "msg4"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "AnsibleUnsafeText"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": {
+        "msg1": "test message1", 
+        "msg2": "test message2", 
+        "msg3": "[u'test message3-1', u'test message3-2']"
+    }
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "unicode"
+}
+
+TASK [set_ansible_vars : set_fact] *********************************************
+ok: [localhost]
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": {
+        "msg1": "test message1", 
+        "msg2": "test message2", 
+        "msg3": "[u'test message3-1', u'test message3-2']"
+    }
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "dict"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "dict_msg1 test message1"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "dict_msg2 test message2"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "dict_msg3 [u'test message3-1', u'test message3-2']"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "msg5"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "AnsibleUnsafeText"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": [
+        "test message1", 
+        "{u'msg': u'test message2'}", 
+        "[u'test message3-1', u'test message3-2']"
+    ]
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "unicode"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": [
+        "test message1", 
+        "{u'msg': u'test message2'}", 
+        "[u'test message3-1', u'test message3-2']"
+    ]
+}
+
+TASK [set_ansible_vars : set_fact] *********************************************
+ok: [localhost]
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "list_1 test message1"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "list_2 {u'msg': u'test message2'}"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "list_3 [u'test message3-1', u'test message3-2']"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "msg6"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "AnsibleUnsafeText"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "test message4"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "unicode"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "msg7"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "AnsibleUnsafeText"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "filter_plugins\nmain.yml\nset_ansible_vars"
+}
+
+TASK [set_ansible_vars : debug] ************************************************
+ok: [localhost] => {
+    "msg": "unicode"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=41   changed=1    unreachable=0    failed=0   
+
