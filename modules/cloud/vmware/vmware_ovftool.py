@@ -13,6 +13,7 @@ requirements:
   - python >= 2.6
   - PyVmomi
   - requests
+  - xmltodict
 options:
   name:
     description:
@@ -116,6 +117,7 @@ import os
 import threading
 import re
 import time
+import xmltodict
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -182,7 +184,9 @@ class VMwareOvfTool():
         ovf_file_path = os.path.join(self.path, list(filter(lambda x: re.match(r".*\.ovf$", x), files))[0])
         if(os.path.isfile(ovf_file_path)):
             with open(ovf_file_path, "r") as f:
-                ovf_file = f.read()
+                ovf_file = xmltodict.parse(f.read())
+                del ovf_file['Envelope']['VirtualSystem']['VirtualHardwareSection']['System']['vssd:VirtualSystemType']
+                ovf_file = xmltodict.unparse(ovf_file)
         else:
             self.module.fail_json(msg="%s not found" % ovf_file_path)
 
