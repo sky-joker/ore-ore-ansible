@@ -1,0 +1,1 @@
+Document moved to [https://github.com/sky-joker/ansible-vmware-learning-materials/tree/master/docs/jupyter/Ansible/module_utils/vmware](https://github.com/sky-joker/ansible-vmware-learning-materials/tree/master/docs/jupyter/Ansible/module_utils/vmware)
