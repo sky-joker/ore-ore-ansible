@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# Copyright: (c) 2019, sky_joker
+# Copyright: (c) 2019, sky-joker
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
@@ -15,10 +15,10 @@ ANSIBLE_METADATA = {
 }
 
 DOCUMENTATION = '''
-module: vmware_guest_regist_operation
+module: vmware_guest_register_operation
 short_description: VM inventory registration operation
 author:
-  - sky_joker (@sky-jocker)
+  - sky-joker (@sky-jocker)
 version_added: ''
 description:
   - This module can register or delete VMs in the inventory.
@@ -45,7 +45,7 @@ options:
     default: /ha-datacenter/vm
   name:
     description:
-    - Specify VM name to be registered in the inventory
+    - Specify VM name to be registered in the inventory.
   esxi_hostname:
     description:
     - The ESXi hostname where the virtual machine will run.
@@ -102,9 +102,9 @@ except ImportError:
 from ansible.module_utils.vmware import PyVmomi, vmware_argument_spec, find_resource_pool_by_name, find_vm_by_name
 from ansible.module_utils.basic import AnsibleModule
 
-class VMwareGuestRegistOperation(PyVmomi):
+class VMwareGuestRegisterOperation(PyVmomi):
     def __init__(self, module):
-        super(VMwareGuestRegistOperation, self).__init__(module)
+        super(VMwareGuestRegisterOperation, self).__init__(module)
         self.folder = module.params["folder"]
         self.name = module.params["name"]
         self.esxi_hostname = module.params["esxi_hostname"]
@@ -169,7 +169,7 @@ def main():
     module = AnsibleModule(argument_spec=argument_spec,
                            supports_check_mode=True)
 
-    vmware_guest_regist_operation = VMwareGuestRegistOperation(module)
+    vmware_guest_regist_operation = VMwareGuestRegisterOperation(module)
     vmware_guest_regist_operation.execute()
 
 if __name__ == "__main__":
