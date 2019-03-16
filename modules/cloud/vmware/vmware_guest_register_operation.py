@@ -70,7 +70,7 @@ options:
 
 EXAMPLES = '''
 - name: Register VM to inventory
-  vmware_guest_regist_operation:
+  vmware_guest_register_operation:
     hostname: "{{ vcenter_hostname }}"
     username: "{{ vcenter_username }}"
     password: "{{ vcenter_password }}"
@@ -83,7 +83,7 @@ EXAMPLES = '''
     state: present
 
 - name: UnRegister VM from inventory
-  vmware_guest_regist_operation:
+  vmware_guest_register_operation:
     hostname: "{{ vcenter_hostname }}"
     username: "{{ vcenter_username }}"
     password: "{{ vcenter_password }}"
@@ -169,8 +169,8 @@ def main():
     module = AnsibleModule(argument_spec=argument_spec,
                            supports_check_mode=True)
 
-    vmware_guest_regist_operation = VMwareGuestRegisterOperation(module)
-    vmware_guest_regist_operation.execute()
+    vmware_guest_register_operation = VMwareGuestRegisterOperation(module)
+    vmware_guest_register_operation.execute()
 
 if __name__ == "__main__":
     main()
