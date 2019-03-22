@@ -169,7 +169,7 @@ def main():
     argument_spec.update(folder=dict(type="str", default="/ha-datacenter/vm"),
                          name=dict(type="str", required=True),
                          esxi_hostname=dict(type="str"),
-                         path=dict(type="str"),
+                         path=dict(type="str", required=True),
                          template=dict(type="bool", default=False),
                          pool=dict(type="str", default="Resources"),
                          state=dict(type="str", default="present", cohices=["present", "absent"]))
