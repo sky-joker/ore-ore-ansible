@@ -144,13 +144,16 @@ class VMwareGuestRegisterOperation(PyVmomi):
 
         else:
             vm_obj = find_vm_by_name(self.content, self.name, folder=folder_obj)
-            if(vm_obj):
+            if(vm_obj and vm_obj.runtime.powerState == "poweredOff"):
                 try:
                     vm_obj.UnregisterVM()
                 except Exception as e:
                     self.module.fail_json(msg="%s" % e)
                 result.update(changed=True)
                 self.module.exit_json(**result)
+
+            elif(vm_obj and vm_obj.runtime.powerState != "poweredOff"):
+                self.module.fail_json(msg="Virtual machine %s has not been powered off" % self.name)
 
             else:
                 self.module.exit_json(**result)
