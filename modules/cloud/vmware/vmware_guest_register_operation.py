@@ -60,12 +60,17 @@ options:
     - 'Examples:'
     - '    [datastore01] vm/vm.vmx'
     - '    [datastore01] vm/vm.vmtx'
+  pool:
+    description:
+    - Specify resource pool name.
+    default: Resources
   state:
     description:
     - Specify the state the virtual machine should be in.
     - if set to C(present), register VM in inventory.
     - if set to C(absent), unregister VM from inventory.
     default: present
+extends_documentation_fragment: vmware.documentation
 '''
 
 EXAMPLES = '''
@@ -102,6 +107,7 @@ except ImportError:
 from ansible.module_utils.vmware import PyVmomi, vmware_argument_spec, find_resource_pool_by_name, find_vm_by_name
 from ansible.module_utils.basic import AnsibleModule
 
+
 class VMwareGuestRegisterOperation(PyVmomi):
     def __init__(self, module):
         super(VMwareGuestRegisterOperation, self).__init__(module)
@@ -112,7 +118,6 @@ class VMwareGuestRegisterOperation(PyVmomi):
         self.template = module.params["template"]
         self.pool = module.params["pool"]
         self.state = module.params["state"]
-
 
     def execute(self):
         result = dict(changed=False)
@@ -167,13 +172,14 @@ def main():
                          path=dict(type="str"),
                          template=dict(type="bool", default=False),
                          pool=dict(type="str", default="Resources"),
-                         state=dict(type="str", default="present", cohices=["present","absent"]))
+                         state=dict(type="str", default="present", cohices=["present", "absent"]))
 
     module = AnsibleModule(argument_spec=argument_spec,
                            supports_check_mode=True)
 
     vmware_guest_register_operation = VMwareGuestRegisterOperation(module)
     vmware_guest_register_operation.execute()
+
 
 if __name__ == "__main__":
     main()
