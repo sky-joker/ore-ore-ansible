@@ -7,6 +7,8 @@ cd /opt/ansible
 for module in $(find $module_dir | grep "\.py$" | awk -F / '{print $(NF)}' | sed -e "s/\.py$//g" | grep -v "__init__" | sort) ; do
     if [ $version = "2.6" ] ; then
         ansible-test sanity --python $version --skip-test botmeta $module
+    elif [ $version = "3.8" ] ; then
+        ansible-test sanity --python $version --skip-test pylint $module
     else
         ansible-test sanity --python $version $module
     fi

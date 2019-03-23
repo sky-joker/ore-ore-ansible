@@ -22,3 +22,5 @@ jobs:
       script: docker exec ansible-ci /bin/sh -c '/opt/ansible_module_test.sh 3.6'
     - name: python 3.7
       script: docker exec ansible-ci /bin/sh -c '/opt/ansible_module_test.sh 3.7'
+    - name: python 3.8
+      script: docker exec ansible-ci /bin/sh -c '/opt/ansible_module_test.sh 3.8'
