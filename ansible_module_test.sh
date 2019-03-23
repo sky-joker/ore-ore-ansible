@@ -12,7 +12,6 @@ for module in $(find $module_dir | grep "\.py$" | awk -F / '{print $(NF)}' | sed
     fi
 
     if [ $? -ne 0 ] ; then
-      echo $module
       exit 1
     fi
 done
