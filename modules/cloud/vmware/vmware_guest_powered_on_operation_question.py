@@ -90,7 +90,6 @@ class VMwareGuestPoweredOnOperationQuestion(PyVmomi):
         self.answer = module.params["answer"]
         self.state = module.params["state"]
 
-
     def execute(self):
         result = dict(changed=False)
 

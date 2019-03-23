@@ -91,7 +91,6 @@ class Host(object):
         self._module = module
         self._zapi = zbx
 
-
     def get_hosts_inventory_by_host_name(self, host_name, exact_match):
         """Get hosts by host name"""
         search_key = 'search'
@@ -110,7 +109,6 @@ class Host(object):
         else:
             return host_list
 
-
     def get_hosts_inventory_by_all_host(self):
         """Get hosts inventory by all host"""
         host_list = self._zapi.host.get({
@@ -122,7 +120,6 @@ class Host(object):
             self._module.fail_json(msg="Host not found: %s" % host_name)
         else:
             return host_list
-
 
     def delete_duplicate_hosts(self, hosts):
         """ Delete duplicated hosts """
