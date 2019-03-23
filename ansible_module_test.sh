@@ -6,4 +6,7 @@ cd /opt/ansible
 . hacking/env-setup
 for module in $(find $module_dir | grep "\.py$" | awk -F / '{print $(NF)}' | sed -e "s/\.py$//g" | grep -v "__init__") ; do
     ansible-test sanity --python $version $module
+    if [ $? -ne 0 ] ; then
+      exit 1
+    fi
 done
