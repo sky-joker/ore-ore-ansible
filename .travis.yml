@@ -5,9 +5,6 @@ services:
 before_install:
   - docker build -t ansible-ci:latest .
   - docker run -d -it --name ansible-ci ansible-ci:latest
-  - docker cp ansible_module_test.sh ansible-ci:/opt
-  - docker cp modules ansible-ci:/opt/ansible/lib/ansible/modules/salf_made/
-  - docker exec ansible-ci /bin/sh -c 'chmod +x /opt/ansible_module_test.sh'
 
 jobs:
   include:
