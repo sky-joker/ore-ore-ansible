@@ -1,12 +1,25 @@
-#/!/usr/bin/python
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 # Copyright: (c) 2018, sky_joker
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
+
+ANSIBLE_METADATA = {
+    'metadata_version': '1.1',
+    'status': ['preview'],
+    'supported_by': 'community'
+}
+
 DOCUMENTATION = '''
 module: zabbix_user_group
 short_description: Module to add user groups to Zabbix.
+author:
+  - sky-joker (@sky-jocker)
+version_added: ''
 description:
     - Create user groups if they do not exist.
     - Delete existing user groups if they exist.
@@ -48,11 +61,13 @@ options:
         description:
             - Create or delete user group.
         default: present
-        choices: [ "present", "absent" ]
+        choices: [ present, absent ]
     timeout:
         description:
             - Specify the timeout time for Zabbix server connection.
         default: 10
+extends_documentation_fragment:
+    - zabbix
 '''
 
 EXAMPLES = '''
@@ -92,6 +107,7 @@ except ImportError:
 from ansible.module_utils.basic import AnsibleModule
 from collections import defaultdict
 
+
 def check_user_group(zbx, user_group):
     r = zbx.usergroup.get({
         'output': 'extend',
@@ -104,6 +120,7 @@ def check_user_group(zbx, user_group):
         return r[0]
     else:
         return None
+
 
 def get_host_group_id(zbx, host_group):
     r = zbx.hostgroup.get({
@@ -118,6 +135,7 @@ def get_host_group_id(zbx, host_group):
     else:
         return None
 
+
 def get_user_id(zbx, user):
     r = zbx.user.get({
         'output': 'extend',
@@ -130,6 +148,7 @@ def get_user_id(zbx, user):
         return r[0]
     else:
         return None
+
 
 def main():
     argument_spec = dict(
@@ -144,10 +163,10 @@ def main():
                          options=dict(
                              host_group_name=dict(type='str', required=True),
                              permission=dict(type='str', required=True,
-                                             choice=['deny', 'read', 'read-write']),
+                                             choices=['deny', 'read', 'read-write']),
                          )),
         users=dict(type='list'),
-        state=dict(default='present', required=False, choice=['present', 'absent']),
+        state=dict(default='present', required=False, choices=['present', 'absent']),
         timeout=dict(type='int', default=10)
     )
 
@@ -178,7 +197,7 @@ def main():
     host_group_permission = {
         'deny': 0,
         'read': 2,
-        'read-write':3
+        'read-write': 3
     }
 
     result = dict(changed=False)
@@ -229,6 +248,7 @@ def main():
             module.exit_json(**result)
         else:
             module.exit_json(**result)
+
 
 if __name__ == "__main__":
     main()

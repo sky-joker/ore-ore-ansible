@@ -17,6 +17,9 @@ ANSIBLE_METADATA = {
 DOCUMENTATION = '''
 module: vmware_vm_shell_wait
 short_description: Wait for processing of executed command
+author:
+  - sky-joker (@sky-jocker)
+version_added: ''
 description:
     - Wait for processing of commands executed by vmware_vm_shell module.
     - This module supports only processes executed by vmware_vm_shell.
@@ -54,6 +57,11 @@ options:
         description:
             - Name of the virtual machine to work with.
         required: True
+    vm_id_type:
+        description:
+            - Specify the attribute to search for VM.
+        choices: [ inventory_path, uuid, dns_name, vm_name ]
+        default: vm_name
     vm_username:
         description:
              - The user to login-in to the virtual machine.
@@ -78,6 +86,7 @@ options:
         description:
             - Specify process check count.
             - If it exceeds the check count, the check processing is stopped.
+extends_documentation_fragment: vmware.documentation
 '''
 
 EXAMPLES = '''
@@ -132,6 +141,7 @@ from ansible.module_utils.vmware import find_obj, connect_to_api, vmware_argumen
 from ansible.module_utils.basic import AnsibleModule
 import time
 import re
+
 
 class VMwareVMShellCheck():
     def __init__(self, module):
@@ -203,6 +213,7 @@ class VMwareVMShellCheck():
         else:
             self.module.fail_json(msg="Unable to find virtual machine")
 
+
 def main():
     argument_spec = vmware_argument_spec()
     argument_spec.update(datacenter=dict(type="str"),
@@ -225,6 +236,7 @@ def main():
 
     vmware_vm_shell_check = VMwareVMShellCheck(module)
     vmware_vm_shell_check.execute()
+
 
 if __name__ == "__main__":
     main()

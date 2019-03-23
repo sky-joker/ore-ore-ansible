@@ -17,36 +17,40 @@ ANSIBLE_METADATA = {
 DOCUMENTATION = '''
 module: vmware_rest_vm_facts
 short_description: Return basic facts pertaining of vm from vSphere rest api
+author:
+  - sky-joker (@sky-jocker)
+version_added: ''
 description:
     - Return basic facts pertaining to a vSphere virtual machine guest.
-requirement:
+requirements:
     - python >= 2.6
     - vSphere Automation SDK
 options:
-    - hostname:
+    hostname:
       description:
-          - The hostname or IP address of the vSphere vCenter server.
-    - password:
+        - The hostname or IP address of the vSphere vCenter server.
+    password:
       description:
-          - The password of the vSphere vCenter server.
-    - username:
+        - The password of the vSphere vCenter server.
+    username:
       description:
-          - The username of the vSphere vCenter server.
-    - validate_certs:
+        - The username of the vSphere vCenter server.
+    validate_certs:
       description:
-          - Allows connection when SSL certificates are not valid. Set to false when certificates are not trusted.
-          - If the value is not specified in the task, the value of environment variable VMWARE_VALIDATE_CERTS will be used instead.
+        - Allows connection when SSL certificates are not valid. Set to false when certificates are not trusted.
+        - If the value is not specified in the task, the value of environment variable VMWARE_VALIDATE_CERTS will be used instead.
       default: True
-    - protocol:
+    protocol:
       description:
-          - Specify the https or http.
+        - Specify the https or http.
       choices:
-          - https
-          - http
-    - name:
+        - https
+        - http
+    name:
       description:
-          - The virtual machine name.
-          - If name is not specified, all the VM information is returned
+        - The virtual machine name.
+        - If name is not specified, all the VM information is returned
+extends_documentation_fragment: vmware_rest_client.documentation
 '''
 
 EXAMPLES = '''
@@ -79,7 +83,11 @@ EXAMPLES = '''
 
 from ansible.module_utils.vmware_rest_client import VmwareRestClient
 from ansible.module_utils.basic import AnsibleModule
-from com.vmware import vcenter_client
+try:
+    from com.vmware import vcenter_client
+except ImportError:
+    pass
+
 
 def main():
     result = dict(changed=False)
@@ -115,6 +123,7 @@ def main():
 
         result["virtual_machines"] = r_array
         module.exit_json(**result)
+
 
 if __name__ == "__main__":
     main()

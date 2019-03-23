@@ -15,7 +15,7 @@ ANSIBLE_METADATA = {
 }
 
 DOCUMENTATION = '''
-module: vmware_guest_powere_question
+module: vmware_guest_powered_on_operation_question
 short_description: Answer questions about VM power on
 author:
   - sky-joker (@sky-jocker)
@@ -51,13 +51,16 @@ options:
     - If C(answer) is set to C(cancel), cancel answer.
     - If C(answer) is set to C(moved), answer as a moved vm.
     - If C(answer) is set to C(copied), anser as a copied vm.
+    choices: [ cancel, moved, copied ]
     default: copied
   state:
     description:
     - Specify state of the virtual machine be in.
     - 'If C(state) is set to C(poweredon) and virtual machine exists with powerstate other than powered on,
-      then the specified virtual machine is powered on.'
+       then the specified virtual machine is powered on.'
+    choices: [ poweredon ]
     default: poweredon
+extends_documentation_fragment: vmware.documentation
 '''
 
 EXAMPLES = '''

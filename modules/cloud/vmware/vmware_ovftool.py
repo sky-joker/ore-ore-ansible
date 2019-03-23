@@ -17,6 +17,9 @@ ANSIBLE_METADATA = {
 DOCUMENTATION = '''
 module: vmware_ovftool
 short_description: Download or deploy ovf.
+author:
+  - sky-joker (@sky-jocker)
+version_added: ''
 description:
   - Module to download or deploy ovf.
 requirements:
@@ -46,13 +49,14 @@ options:
   datastore:
     description:
       - Data store name to save virtual machine.
+    default: datastore1
   folder:
     description:
       - Path to folder to deploy virtual machine.
     default: /vm
   disk_type:
     description:
-      - Type of vmdk.(see diskProvisioning: https://goo.gl/KCBTP4)
+      - 'Type of vmdk.(see diskProvisioning: https://goo.gl/KCBTP4)'
     default: thin
   method:
     description:
@@ -101,7 +105,7 @@ EXAMPLES = '''
     path: ./devel
     folder: /vm/example
     datastore: NFS
-    
+
 - name: OVF Deploy Task.
   vmware_ovftool:
     hostname: vCenter
@@ -122,16 +126,28 @@ try:
 except ImportError:
     HAS_PYVMOMI = False
 
+try:
+    import xmltodict
+    HAS_XMLTODICT = True
+except ImportError:
+    HAS_XMLTODICT = False
+
+try:
+    import requests
+    from requests.packages.urllib3.exceptions import InsecureRequestWarning
+    requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+    HAS_REQUESTS = True
+except ImportError:
+    HAS_REQUESTS = False
+
+
 from ansible.module_utils.vmware import find_obj, connect_to_api, vmware_argument_spec
 from ansible.module_utils.basic import AnsibleModule
 import os
 import threading
 import re
 import time
-import xmltodict
-import requests
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
 
 class VMwareOvfTool():
     def __init__(self, module):
@@ -164,26 +180,32 @@ class VMwareOvfTool():
 
             def run(self):
                 url = self.deviceUrl.url
-                if (re.search(r"\*", url)): url = url.replace("*", self.host)
+                if (re.search(r"\*", url)):
+                    url = url.replace("*", self.host)
                 file_path = os.path.join(self.path, self.targetId)
 
                 headers = {"Content-Type": "application/x-vnd.vmware-streamVmdk"}
                 requests.post(url, headers=headers, data=open(file_path, 'rb'), verify=self.ssl_verify)
 
         # Check exist of directory path.
-        if (not (os.path.isdir(self.path))): self.module.fail_json(msg="%s not found" % self.path)
+        if (not (os.path.isdir(self.path))):
+            self.module.fail_json(msg="%s not found" % self.path)
 
         # Search of Managed Objects.
         datastore = find_obj(self.content, [vim.Datastore], self.datastore)
-        if(datastore == None): self.module.fail_json(msg="%s not found" % self.datastore)
+        if(datastore is None):
+            self.module.fail_json(msg="%s not found" % self.datastore)
         folder = self.content.searchIndex.FindByInventoryPath("/%s/%s" % (self.datacenter, self.folder))
-        if(folder == None): self.module.fail_json(msg="/%s/%s not found. There is no datacenter or folder, or both." % (self.datacenter, self.folder))
+        if(folder is None):
+            self.module.fail_json(msg="/%s/%s not found. There is no datacenter or folder, or both." % (self.datacenter, self.folder))
         if(self.resource_pool):
             resource_pool = find_obj(self.content, [vim.ResourcePool], self.resource_pool)
-            if(resource_pool == None): self.module.fail_json(msg="%s not found" % self.resource_pool)
+            if(resource_pool is None):
+                self.module.fail_json(msg="%s not found" % self.resource_pool)
         elif(self.compute_resource):
             compute_resource = find_obj(self.content, [vim.ComputeResource], self.compute_resource)
-            if(compute_resource == None): self.module.fail_json(msg="%s not found" % self.compute_resource)
+            if(compute_resource is None):
+                self.module.fail_json(msg="%s not found" % self.compute_resource)
             resource_pool = compute_resource.resourcePool
         else:
             self.module.fail_json(msg="Please specify resource_pool or compute_resource")
@@ -214,8 +236,10 @@ class VMwareOvfTool():
                                          folder)
 
         while True:
-            if (lease.state == vim.HttpNfcLease.State.ready): break
-            elif(lease.state == vim.HttpNfcLease.State.error): self.module.fail_json(msg="ovf import state error")
+            if (lease.state == vim.HttpNfcLease.State.ready):
+                break
+            elif(lease.state == vim.HttpNfcLease.State.error):
+                self.module.fail_json(msg="ovf import state error")
             time.sleep(1)
 
         threads = []
@@ -256,12 +280,13 @@ class VMwareOvfTool():
 
             def run(self):
                 url = self.deviceUrl.url
-                if(re.search(r"\*", url)): url = url.replace("*", self.host)
+                if(re.search(r"\*", url)):
+                    url = url.replace("*", self.host)
                 file_name = url.split("/").pop()
                 save_path = os.path.join(self.path, file_name)
 
                 headers = {"Content-Type": "application/x-vnd.vmware-streamVmdk"}
-                r = requests.get(url, headers=headers  , stream=True, verify=self.ssl_verify)
+                r = requests.get(url, headers=headers, stream=True, verify=self.ssl_verify)
                 if(r.status_code == 200):
                     total_byte = 0
                     with open(save_path, "wb") as f:
@@ -278,17 +303,21 @@ class VMwareOvfTool():
                     ovf_files.append(ovf_file)
 
         # Check exist of directory path.
-        if(not(os.path.isdir(self.path))): self.module.fail_json(msg="%s not found" % self.path)
+        if(not(os.path.isdir(self.path))):
+            self.module.fail_json(msg="%s not found" % self.path)
 
         # Get VirtualMachine obj.
         obj = find_obj(self.content, [vim.VirtualMachine], self.name)
-        if(obj == None): self.module.fail_json(msg="%s not found" % self.name)
+        if(obj is None):
+            self.module.fail_json(msg="%s not found" % self.name)
 
         # Export ovf.
         lease = obj.ExportVm()
         while True:
-            if(lease.state == vim.HttpNfcLease.State.ready): break
-            elif(lease.state == vim.HttpNfcLease.State.error): self.module.fail_json(msg="ovf export state error")
+            if(lease.state == vim.HttpNfcLease.State.ready):
+                break
+            elif(lease.state == vim.HttpNfcLease.State.error):
+                self.module.fail_json(msg="ovf export state error")
             time.sleep(1)
 
         threads = []
@@ -328,6 +357,7 @@ class VMwareOvfTool():
         lease.HttpNfcLeaseComplete()
         self.module.exit_json(**result)
 
+
 def main():
     argument_spec = vmware_argument_spec()
     argument_spec.update(name=dict(required=True, type="str"),
@@ -346,8 +376,15 @@ def main():
     if not HAS_PYVMOMI:
         module.fail_json(msg='pyvmomi python library not found')
 
+    if not HAS_XMLTODICT:
+        module.fail_json(msg='xmltodict library not found')
+
+    if not HAS_REQUESTS:
+        module.fail_json(msg='requests library not found')
+
     vmware_ovf_tool = VMwareOvfTool(module)
     vmware_ovf_tool.execute()
+
 
 if __name__ == "__main__":
     main()

@@ -19,7 +19,7 @@ hosts_inventory:
   description: List of Zabbix hosts. See https://www.zabbix.com/documentation/3.4/manual/api/reference/host/get for list of host values.
   returned: success
   type: dict
-  sample: [{'hostid': '10263', 'proxy_hostid': '0', ... poc_2_phone_b': '', 'poc_2_cell': '', 'poc_2_screen': '', 'poc_2_notes': ''}}]
+  sample: "[{'hostid': '10263', 'proxy_hostid': '0', ..., {'poc_2_phone_b': '', 'poc_2_cell': '', 'poc_2_screen': '', 'poc_2_notes': ''}}]"
 '''
 
 DOCUMENTATION = '''
@@ -39,6 +39,10 @@ options:
             - Name of the host in Zabbix.
             - host_name is the unique identifier used and cannot be updated using this module.
         required: true
+    host_ip:
+        description:
+            - Host interface IP of the host in Zabbix.
+        required: false
     exact_match:
         description:
             - Find the exact match
@@ -86,6 +90,7 @@ try:
 except ImportError:
     HAS_ZABBIX_API = False
 
+
 class Host(object):
     def __init__(self, module, zbx):
         self._module = module
@@ -109,7 +114,7 @@ class Host(object):
         else:
             return host_list
 
-    def get_hosts_inventory_by_all_host(self):
+    def get_hosts_inventory_by_all_host(self, host_name):
         """Get hosts inventory by all host"""
         host_list = self._zapi.host.get({
             'output': 'extend',
@@ -179,7 +184,7 @@ def main():
     if host_name:
         hosts_inventory = host.get_hosts_inventory_by_host_name(host_name, exact_match)
     else:
-        hosts_inventory = host.get_hosts_inventory_by_all_host()
+        hosts_inventory = host.get_hosts_inventory_by_all_host(host_name)
 
     if is_remove_duplicate:
         hosts_inventory = host.delete_duplicate_hosts(hosts_inventory)
