@@ -1,0 +1,21 @@
+services:
+  - docker
+
+before_install:
+  - docker build -t ansible-ci:latest .
+  - docker run -d -it --name ansible-ci ansible-ci:latest
+  - docker cp ansible_module_test ansible-ci:/opt
+  - docker cp modules ansible-ci:/opt/ansible/lib/ansible/modules/salf_made/
+  - docker exec ansible-ci /bin/sh -c 'chmod +x /opt/ansible_module_test.sh'
+
+jobs:
+  include:
+    - stage: sanity test
+      name: python 2.7
+      script: docker exec ansible-ci /bin/sh -c '/opt/ansible_module_test.sh 2.7'
+    - name: python 3.5
+      script: docker exec ansible-ci /bin/sh -c '/opt/ansible_module_test.sh 3.5'
+    - name: python 3.6
+      script: docker exec ansible-ci /bin/sh -c '/opt/ansible_module_test.sh 3.6'
+    - name: python 3.7
+      script: docker exec ansible-ci /bin/sh -c '/opt/ansible_module_test.sh 3.7'
