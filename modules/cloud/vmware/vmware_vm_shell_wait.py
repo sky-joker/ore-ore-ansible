@@ -18,7 +18,7 @@ DOCUMENTATION = '''
 module: vmware_vm_shell_wait
 short_description: Wait for processing of executed command
 author:
-  - sky-joker (@sky-jocker)
+  - sky-joker (@sky-joker)
 version_added: ''
 description:
     - Wait for processing of commands executed by vmware_vm_shell module.

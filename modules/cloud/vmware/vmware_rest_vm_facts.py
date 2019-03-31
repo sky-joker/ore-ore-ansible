@@ -18,7 +18,7 @@ DOCUMENTATION = '''
 module: vmware_rest_vm_facts
 short_description: Return basic facts pertaining of vm from vSphere rest api
 author:
-  - sky-joker (@sky-jocker)
+  - sky-joker (@sky-joker)
 version_added: ''
 description:
     - Return basic facts pertaining to a vSphere virtual machine guest.

@@ -18,7 +18,7 @@ DOCUMENTATION = '''
 module: vmware_ovftool
 short_description: Download or deploy ovf.
 author:
-  - sky-joker (@sky-jocker)
+  - sky-joker (@sky-joker)
 version_added: ''
 description:
   - Module to download or deploy ovf.

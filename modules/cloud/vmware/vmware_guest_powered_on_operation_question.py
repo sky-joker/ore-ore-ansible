@@ -18,7 +18,7 @@ DOCUMENTATION = '''
 module: vmware_guest_powered_on_operation_question
 short_description: Answer questions about VM power on
 author:
-  - sky-joker (@sky-jocker)
+  - sky-joker (@sky-joker)
 version_added: ''
 description:
   - This module answer questions asked when the virtual machine is powered on after virtual machine copied or moved.
