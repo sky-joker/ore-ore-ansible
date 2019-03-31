@@ -18,7 +18,7 @@ DOCUMENTATION = '''
 module: zabbix_user_group
 short_description: Module to add user groups to Zabbix.
 author:
-  - sky-joker (@sky-jocker)
+  - sky-joker (@sky-joker)
 version_added: ''
 description:
     - Create user groups if they do not exist.

@@ -26,7 +26,7 @@ DOCUMENTATION = '''
 module: zabbix_host_inventory_facts
 short_description: Gather facts about Zabbix host inventory
 author:
-  - sky-joker (@sky-jocker)
+  - sky-joker (@sky-joker)
 version_added: ''
 description:
   - This module gets Zabbix host inventory.
