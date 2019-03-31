@@ -31,7 +31,7 @@ options:
     - Destination datacenter for the deploy operation.
     - This parameter is case sensitive.
     default: ha-datacenter
-  cluster:
+  cluster_name:
     description:
       - Specify a cluster name to register VM.
   folder:
@@ -169,7 +169,7 @@ class VMwareGuestRegisterOperation(PyVmomi):
                 if(self.esxi_hostname):
                     host_obj = self.find_hostsystem_by_name(self.esxi_hostname)
                     if(not(host_obj)):
-                        self.module.fail_json(msg="Cannot find the specified ESXi host: %s" % self.host)
+                        self.module.fail_json(msg="Cannot find the specified ESXi host: %s" % self.esxi_hostname)
                 else:
                     host_obj = None
 
