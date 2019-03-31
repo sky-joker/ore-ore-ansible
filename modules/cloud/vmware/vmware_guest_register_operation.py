@@ -19,9 +19,9 @@ module: vmware_guest_register_operation
 short_description: VM inventory registration operation
 author:
   - sky-joker (@sky-jocker)
-version_added: ''
+version_added: '2.8'
 description:
-  - This module can register or unregister VMs in the inventory.
+  - This module can register or unregister VMs to the inventory.
 requirements:
   - python >= 2.6
   - PyVmomi
@@ -91,6 +91,34 @@ EXAMPLES = '''
     datacenter: "{{ datacenter }}"
     folder: "/vm"
     esxi_hostname: "{{ esxi_hostname }}"
+    name: "{{ vm_name }}"
+    template: no
+    path: "[datastore1] vm/vm.vmx"
+    state: present
+
+- name: Register VM in resource pool
+  vmware_guest_register_operation:
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}"
+    password: "{{ vcenter_password }}"
+    validate_certs: no
+    datacenter: "{{ datacenter }}"
+    folder: "/vm"
+    resource_pool: "{{ resource_pool }}"
+    name: "{{ vm_name }}"
+    template: no
+    path: "[datastore1] vm/vm.vmx"
+    state: present
+
+- name: Register VM in Cluster
+  vmware_guest_register_operation:
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}"
+    password: "{{ vcenter_password }}"
+    validate_certs: no
+    datacenter: "{{ datacenter }}"
+    folder: "/vm"
+    cluster_name: "{{ cluster_name }}"
     name: "{{ vm_name }}"
     template: no
     path: "[datastore1] vm/vm.vmx"
