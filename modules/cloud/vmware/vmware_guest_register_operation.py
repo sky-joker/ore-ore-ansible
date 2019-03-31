@@ -21,7 +21,7 @@ author:
   - sky-joker (@sky-jocker)
 version_added: ''
 description:
-  - This module can register or delete VMs in the inventory.
+  - This module can register or unregister VMs in the inventory.
 requirements:
   - python >= 2.6
   - PyVmomi
