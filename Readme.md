@@ -1,7 +1,1 @@
-|Build Status| |License|
-
-.. |Build Status| image:: https://travis-ci.org/sky-joker/ore-ore-ansible.svg?branch=master
-   :target: https://travis-ci.org/sky-joker/ore-ore-ansible
-.. |License| image:: https://img.shields.io/badge/license-GPL%20v3.0-brightgreen.svg
-   :target: COPYING
-   :alt: Repository License
+[![Build Status](https://travis-ci.org/sky-joker/ore-ore-ansible.svg?branch=master)](https://travis-ci.org/sky-joker/ore-ore-ansible) [![License](https://img.shields.io/badge/license-GPL%20v3.0-brightgreen.svg)](https://github.com/sky-joker/ore-ore-ansible/blob/master/LICENSE.txt)
