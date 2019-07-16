@@ -31,10 +31,12 @@ options:
         description:
             - The datacenter hosting the virtual machine.
             - If set, it will help to speed up virtual machine search.
+        type: str
     cluster:
         description:
             - The cluster hosting the virtual machine.
             - If set, it will help to speed up virtual machine search.
+        type: str
     folder:
         description:
             - Destination folder, absolute or relative path to find an existing guest or create the new guest.
@@ -53,39 +55,48 @@ options:
             - '   folder: folder2'
         default: /vm
         version_added: "2.4"
+        type: str
     vm_id:
         description:
             - Name of the virtual machine to work with.
         required: True
+        type: str
     vm_id_type:
         description:
             - Specify the attribute to search for VM.
         choices: [ inventory_path, uuid, dns_name, vm_name ]
         default: vm_name
+        type: str
     vm_username:
         description:
              - The user to login-in to the virtual machine.
         required: True
+        type: str
     vm_password:
         description:
             - The password used to login-in to the virtual machine.
         required: True
+        type: str
     vm_shell:
         description:
             - The absolute path to the program to start.
             - On Linux, shell is executed via bash.
         required: True
+        type: str
     vm_shell_args:
         description:
             - The argument to the program.
+        type: str
     check_interval:
         description:
             - Specify the process check interval in seconds.
         default: 1
+        type: int
     time_out:
         description:
             - Specify process check count.
             - If it exceeds the check count, the check processing is stopped.
+        type: int
 extends_documentation_fragment: vmware.documentation
 '''
 
@@ -225,8 +236,8 @@ def main():
                          vm_password=dict(required=True, type="str", no_log=True),
                          vm_shell=dict(required=True, type="str"),
                          vm_shell_args=dict(type="str"),
-                         check_interval=dict(type=int, default=1),
-                         time_out=dict(type=int))
+                         check_interval=dict(type="int", default=1),
+                         time_out=dict(type="int"))
 
     module = AnsibleModule(argument_spec=argument_spec,
                            supports_check_mode=True)

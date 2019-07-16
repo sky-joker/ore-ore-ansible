@@ -43,9 +43,11 @@ options:
     - '   folder: folder1/datacenter1/vm'
     - '   folder: /folder1/datacenter1/vm/folder2'
     default: /ha-datacenter/vm
+    type: str
   name:
     description:
     - Specify a VM to powered on operation.
+    type: str
   answer:
     description:
     - If C(answer) is set to C(cancel), cancel answer.
@@ -53,6 +55,7 @@ options:
     - If C(answer) is set to C(copied), anser as a copied vm.
     choices: [ cancel, moved, copied ]
     default: copied
+    type: str
   state:
     description:
     - Specify state of the virtual machine be in.
@@ -60,6 +63,7 @@ options:
        then the specified virtual machine is powered on.'
     choices: [ poweredon ]
     default: poweredon
+    type: str
 extends_documentation_fragment: vmware.documentation
 '''
 

@@ -32,32 +32,40 @@ options:
     description:
       - The virtual machine name.
     required: True
+    type: str
   path:
     description:
       - Local directory path.
     required: True
+    type: str
   datacenter:
     description:
       - The datacenter hosting the virtual machine.
     default: ha-datacenter
+    type: str
   compute_resource:
     description:
       - If deploy to compute resource, requires compute resource name.(host or cluster name)
+    type: str
   resource_pool:
     description:
       - If deploy to resource pool, requires resource pool name.
+    type: str
   datastore:
     description:
       - Data store name to save virtual machine.
     default: datastore1
+    type: str
   folder:
     description:
       - Path to folder to deploy virtual machine.
     default: /vm
+    type: str
   disk_type:
     description:
       - 'Type of vmdk.(see diskProvisioning: https://goo.gl/KCBTP4)'
     default: thin
+    type: str
   method:
     description:
       - ovf download or deploy.
@@ -65,6 +73,7 @@ options:
       - download
       - deploy
     required: True
+    type: str
 extends_documentation_fragment: vmware.documentation
 '''
 

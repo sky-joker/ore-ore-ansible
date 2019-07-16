@@ -31,9 +31,11 @@ options:
     - Destination datacenter for the deploy operation.
     - This parameter is case sensitive.
     default: ha-datacenter
+    type: str
   cluster_name:
     description:
       - Specify a cluster name to register VM.
+    type: str
   folder:
     description:
     - Description folder, absolute path of the target folder.
@@ -50,34 +52,41 @@ options:
     - '   folder: folder1/datacenter1/vm'
     - '   folder: /folder1/datacenter1/vm/folder2'
     default: /vm
+    type: str
   name:
     description:
     - Specify VM name to be registered in the inventory.
+    type: str
   esxi_hostname:
     description:
     - The ESXi hostname where the virtual machine will run.
     - This parameter is case sensitive.
+    type: str
   template:
     description:
     - Whether to register VM as a template.
     default: False
+    type: bool
   path:
     description:
     - Specify the path of vmx file.
     - 'Examples:'
     - '    [datastore1] vm/vm.vmx'
     - '    [datastore1] vm/vm.vmtx'
+    type: str
   resource_pool:
     description:
     - Specify a resource pool name to register VM.
     - This parameter is case sensitive.
     - Resource pool should be child of the selected host parent.
+    type: str
   state:
     description:
     - Specify the state the virtual machine should be in.
     - if set to C(present), register VM in inventory.
     - if set to C(absent), unregister VM from inventory.
     default: present
+    type: str
 extends_documentation_fragment: vmware.documentation
 '''
 

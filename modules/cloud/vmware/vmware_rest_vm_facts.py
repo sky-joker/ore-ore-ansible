@@ -50,6 +50,7 @@ options:
       description:
         - The virtual machine name.
         - If name is not specified, all the VM information is returned
+      type: str
 extends_documentation_fragment: vmware_rest_client.documentation
 '''
 
