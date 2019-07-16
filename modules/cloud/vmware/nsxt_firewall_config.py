@@ -65,11 +65,13 @@ options:
       - 'Valid attributes are:'
       - '  filename: Specify backup file name.'
       - '  dir_path: Specify a directory name to save backup file.'
+      type: dict
     restore:
       description:
       - This argument can be restore firewall rules.
       - 'Valid attributes are:'
       - '  file_path: Specify the firewall rules file path to restore'
+      type: dict
     exclude_rules:
       description:
       - This argument can exclude rules to backup or restore by firewall name.
