@@ -47,6 +47,7 @@ options:
         description:
             - Specify the user group name.
         required: True
+        type: str
     host_groups:
         description:
             - Specify the host group to be associated with the user group.
@@ -54,14 +55,17 @@ options:
             - '   host_group_name: Specify host group name.'
             - '   permission: Specify the permission to be associated with the host group'
             - '      choices: [deny, read, read-write]'
+        type: list
     users:
         description:
             - Specify the user(alias name) to be associated with the user group.
+        type: list
     state:
         description:
             - Create or delete user group.
         default: present
         choices: [ present, absent ]
+        type: str
     timeout:
         description:
             - Specify the timeout time for Zabbix server connection.
@@ -166,7 +170,7 @@ def main():
                                              choices=['deny', 'read', 'read-write']),
                          )),
         users=dict(type='list'),
-        state=dict(default='present', required=False, choices=['present', 'absent']),
+        state=dict(type='str', default='present', required=False, choices=['present', 'absent']),
         timeout=dict(type='int', default=10)
     )
 

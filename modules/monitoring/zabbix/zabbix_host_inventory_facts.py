@@ -39,10 +39,12 @@ options:
             - Name of the host in Zabbix.
             - host_name is the unique identifier used and cannot be updated using this module.
         required: true
+        type: str
     host_ip:
         description:
             - Host interface IP of the host in Zabbix.
         required: false
+        type: list
     exact_match:
         description:
             - Find the exact match
