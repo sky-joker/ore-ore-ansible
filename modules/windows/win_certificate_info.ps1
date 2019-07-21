@@ -14,20 +14,51 @@ $spec = @{
 }
 $module = [Ansible.Basic.AnsibleModule]::Create($args, $spec)
 
-$regexp = $module.Params.regexp
-$CertStoreLocation = $module.Params.cert_store_location
+Function New-CertsResultStructure($certificates, $certs_result) {
 
-Set-Location $CertStoreLocation
-$Certificate = Get-ChildItem | Where-Object { $_.Subject -like "*$regexp*" }
+    foreach($certificate in $certificates) {
+        $certs_result.Add(@{
+            Version = $certificate.Version
+            Subject = $certificate.Subject
+            Issuer = $certificate.Issuer
+            Thumbprint = $certificate.Thumbprint
+            FriendlyName = $certificate.FriendlyName
+            NotBefore = $certificate.NotBefore.ToString("yyyyMMdd")
+            NotAfter = $certificate.NotAfter.ToString("yyyyMMdd")
+            EnhancedKeyUsageList = $certificate.EnhancedKeyUsageList
+            DnsNameList = $certificate.DnsNameList
+            SignatureAlgorithm = $certificate.SignatureAlgorithm
+            SerialNumber = $certificate.SerialNumber
+            PurivateKey = @{
+                PublicOnly = $certificate.PrivateKey.PublicOnly
+                KeySize = $certificate.PrivateKey.KeySize
+                KeyExchangeAlgorithm = $certificate.PrivateKey.KeyExchangeAlgorithm
+            }
+            PublicKey = @{
+                PublicOnly = $certificate.Publickey.Key.PublicOnly
+                KeySize = $certificate.PublicKey.Key.KeySize
+                KeyExchangeAlgorithm = $certificate.PublicKey.Key.KeyExchangeAlgorithm
+            }
+            Archived = $certificate.Archived
+        })
 
-if($Certificate) {
-    $module.Result.Subject = $Certificate.Subject
-    $module.Result.Issuer = $Certificate.Issuer
-    $module.Result.Thumbprint = $Certificate.Thumbprint
-    $module.Result.FriendlyName = $Certificate.FriendlyName
-    $module.Result.NotBefore = $Certificate.NotBefore.ToString("yyyyMMdd")
-    $module.Result.NotAfter = $Certificate.NotAfter.ToString("yyyyMMdd")
+    }
+
+    return ,$certs_result
 }
 
+$regexp = $module.Params.regexp
+$cert_store_location = $module.Params.cert_store_location
+
+Set-Location $cert_store_location
+
+$certs_result = New-Object System.Collections.Generic.List[HashTable]
+$certificates = Get-ChildItem | Where-Object { $_.Subject -like "$regexp" }
+
+if($certificates) {
+    $certs_result = New-CertsResultStructure $certificates $certs_result
+}
+
+$module.Result.certs_info = $certs_result
 $module.Result.changed = $false
 $module.ExitJson()
