@@ -65,12 +65,29 @@ options:
       - 'Valid attributes are:'
       - '  filename: Specify backup file name.'
       - '  dir_path: Specify a directory name to save backup file.'
+      suboptions:
+        filename:
+          description:
+          - Specify backup file name.
+          type: str
+          required: true
+        dir_path:
+          description:
+          - Specify the directory name to save the backup file.
+          type: str
+          required: true
       type: dict
     restore:
       description:
       - This argument can be restore firewall rules.
       - 'Valid attributes are:'
       - '  file_path: Specify the firewall rules file path to restore'
+      suboptions:
+        file_path:
+          description:
+          - Specify file path to restore.
+          type: str
+          required: true
       type: dict
     exclude_rules:
       description:
