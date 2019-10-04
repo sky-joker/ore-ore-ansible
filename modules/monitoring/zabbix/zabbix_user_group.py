@@ -55,6 +55,17 @@ options:
             - '   host_group_name: Specify host group name.'
             - '   permission: Specify the permission to be associated with the host group'
             - '      choices: [deny, read, read-write]'
+        suboptions:
+            host_group_name:
+                description:
+                    - Specify host_group_name.
+                type: str
+                required: true
+            permission:
+                description:
+                    - Specify permission.
+                choices: ['deny', 'read', 'read-write']
+                type: str
         type: list
     users:
         description:
